@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->createToken('accessToken')->accessToken;
     }
+
+    public function currentAccessToken()
+    {
+        return $this->tokens()->where('id', request()->user()->token()->id)->first();
+    }
 }

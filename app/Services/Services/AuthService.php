@@ -125,7 +125,7 @@ class AuthService implements AuthConstructor
      */
     public function logout() : bool
     {
-        Auth::user()->token()->revoke();
+        Auth::user()->currentAccessToken()->revoke();
         return true;
     }
 }
