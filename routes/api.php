@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,14 @@ Route::post('/users/password/reset', [AuthController::class, 'resetPassword'])->
  */
 Route::middleware('auth:api')->group(function () {
 
+    /**
+     * Categories Route
+     */
+    Route::apiResource('/categories', CategoryController::class);
+
+    /**
+     * Products Route
+     */
     Route::apiResource('/products', ProductController::class);
     
     /**
