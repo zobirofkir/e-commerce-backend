@@ -28,7 +28,7 @@ Route::post('/users/password/email', [AuthController::class, 'forgotPassword'])-
  */
 Route::post('/users/password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
 
-/**
+/** 
  * Protected Routes
  */
 Route::middleware('auth:api')->group(function () {
