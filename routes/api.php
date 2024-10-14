@@ -36,6 +36,11 @@ Route::post('/users/password/reset', [AuthController::class, 'resetPassword'])->
 Route::apiResource('/categories', CategoryController::class);
 
 /**
+ * Get Products By Categories
+ */
+Route::get('/categories/{category}/products', [CategoryController::class, 'getProducts']);
+
+/**
  * Products Route
  */
 Route::apiResource('/products', ProductController::class);
