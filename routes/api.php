@@ -30,20 +30,21 @@ Route::post('/users/password/email', [AuthController::class, 'forgotPassword'])-
  */
 Route::post('/users/password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
 
+/**
+ * Categories Route
+ */
+Route::apiResource('/categories', CategoryController::class);
+
+/**
+ * Products Route
+ */
+Route::apiResource('/products', ProductController::class);
+
+
 /** 
  * Protected Routes
  */
 Route::middleware('auth:api')->group(function () {
-
-    /**
-     * Categories Route
-     */
-    Route::apiResource('/categories', CategoryController::class);
-
-    /**
-     * Products Route
-     */
-    Route::apiResource('/products', ProductController::class);
     
     /**
      * Get Current User
