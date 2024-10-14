@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -33,6 +34,8 @@ Route::post('/users/password/reset', [AuthController::class, 'resetPassword'])->
  */
 Route::middleware('auth:api')->group(function () {
 
+    Route::apiResource('/products', ProductController::class);
+    
     /**
      * Get Current User
      */
