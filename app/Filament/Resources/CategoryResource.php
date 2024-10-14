@@ -41,7 +41,7 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
-                TextColumn::make('description')->default('-')
+                TextColumn::make('description')->default('-')->limit(50)
             ])->defaultSort('id', 'desc')
             ->filters([
                 //
