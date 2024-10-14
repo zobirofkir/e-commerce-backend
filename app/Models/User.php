@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->tokens()->where('id', request()->user()->token()->id)->first();
     }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }
