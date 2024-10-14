@@ -32,7 +32,7 @@ class CategoryController extends Controller
      */
     public function getProducts(Category $category)
     {
-        $products = $category->products()->paginate(10);
+        $products = $category->products()->orderBy('id', 'desc')->paginate(10);
         return ProductResource::collection($products);
     }
 }
