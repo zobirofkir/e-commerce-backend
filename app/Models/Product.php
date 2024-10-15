@@ -39,6 +39,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     private function generateSlug($title)
     {
         $slug = Str::slug($title);
