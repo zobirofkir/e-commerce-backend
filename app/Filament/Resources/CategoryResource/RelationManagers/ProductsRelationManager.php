@@ -44,15 +44,6 @@ class ProductsRelationManager extends RelationManager
             ->placeholder('Enter price')
             ->hint('Enter a decimal value, e.g., 19.99'),
 
-            Select::make('category_id')
-                ->label('Category')
-                ->relationship('category', 'name')
-                ->searchable()
-                ->required()
-                ->options(function (callable $get) {
-                    return Category::orderBy('created_at','desc')->pluck('name', 'id');
-                }),
-
             Hidden::make('user_id')
                     ->default(Auth::user()->id)
 
