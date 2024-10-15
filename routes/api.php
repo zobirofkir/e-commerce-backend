@@ -45,6 +45,10 @@ Route::get('/categories/{category}/products', [CategoryController::class, 'getPr
  */
 Route::apiResource('/products', ProductController::class);
 
+/**
+ * Products Search Route
+ */
+Route::get('/products/search/{title?}', [ProductController::class, 'search']);
 
 /** 
  * Protected Routes
