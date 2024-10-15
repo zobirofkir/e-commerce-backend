@@ -31,7 +31,7 @@ class ProductsRelationManager extends RelationManager
 
             FileUpload::make('image')
                     ->disk('public') 
-                    ->directory('blogs')
+                    ->directory('products')
                     ->required(),
 
             Textarea::make('description'),
@@ -65,7 +65,7 @@ class ProductsRelationManager extends RelationManager
                 TextColumn::make('title'),
                 TextColumn::make('price'),
                 TextColumn::make('description')->limit(50),
-            ])
+            ])->defaultSort('id', 'desc')
             ->filters([
                 //
             ])

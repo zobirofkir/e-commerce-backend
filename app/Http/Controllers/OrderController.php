@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    public function listOrder()
+    {
+        $userId = Auth::id();
+        
+        $orders = Order::with('items.product')->where('user_id', $userId)->get();
+    
+        return response()->json($orders);
+    }
+
+    
     public function createOrder(OrderRequest $request)
     {
         $validatedData = $request->validated();
@@ -54,5 +64,20 @@ class OrderController extends Controller
         $order = Order::with('items.product')->findOrFail($id);
 
         return response()->json($order);
+    }
+
+    public function deleteOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        if ($order->user_id !== Auth::id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $order->items()->delete();
+
+        $order->delete();
+
+        return response()->json(['message' => 'Order deleted successfully'], 200);
     }
 }

@@ -37,7 +37,7 @@ class ProductResource extends Resource
 
                 FileUpload::make('image')
                         ->disk('public') 
-                        ->directory('blogs')
+                        ->directory('products')
                         ->required(),
 
                 Textarea::make('description'),
@@ -79,7 +79,7 @@ class ProductResource extends Resource
                 TextColumn::make('title'),
                 TextColumn::make('price'),
                 TextColumn::make('description')->limit(50),
-            ])
+            ])->defaultSort('id', 'desc')
             ->filters([
                 //
             ])

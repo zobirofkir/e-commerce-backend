@@ -57,6 +57,11 @@ Route::get('/products/search/{title?}', [ProductController::class, 'search']);
 Route::middleware('auth:api')->group(function () {
     
     /**
+     * List Orders
+     */
+    Route::get('/orders', [OrderController::class, 'listOrder']);
+
+    /**
      * Create an order
      */
     Route::post('/orders', [OrderController::class, 'createOrder']);
@@ -65,6 +70,12 @@ Route::middleware('auth:api')->group(function () {
      * Show an order
      */
     Route::get('/orders/{id}', [OrderController::class, 'getOrder']);
+
+    /**
+     * Delete Order
+     */
+    Route::delete('/orders/{id}', [OrderController::class, 'deleteOrder']);
+
 
     /**
      * Get Current User
