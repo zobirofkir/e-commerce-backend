@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('order_status');
             $table->decimal('total_price');
-            $table->string('payment_method');
+            $table->string('payment_method')->default('cash_on_delivery');
             $table->string('shiping_address');
             $table->timestamps();
         });

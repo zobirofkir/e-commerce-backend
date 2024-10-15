@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,16 @@ Route::get('/products/search/{title?}', [ProductController::class, 'search']);
  */
 Route::middleware('auth:api')->group(function () {
     
+    /**
+     * Create an order
+     */
+    Route::post('/orders', [OrderController::class, 'createOrder']);
+    
+    /**
+     * Show an order
+     */
+    Route::get('/orders/{id}', [OrderController::class, 'getOrder']);
+
     /**
      * Get Current User
      */
