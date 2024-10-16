@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -17,17 +17,17 @@ class OrderController extends Controller
         
         $orders = Order::with('items.product')->where('user_id', $userId)->get();
     
-        return response()->json($orders);
+        return OrderResource::collection($orders);
     }
 
-    
+    // Create a new order
     public function createOrder(OrderRequest $request)
     {
         $validatedData = $request->validated();
     
         $order = Order::create([
             'user_id' => Auth::id(),
-            'order_status' => 'pending',  
+            'order_status' => 'pending',
             'total_price' => 0, 
             'shiping_address' => $validatedData['shiping_address'],
             'payment_method' => $validatedData['payment_method']
@@ -52,26 +52,27 @@ class OrderController extends Controller
     
         $order->update(['total_price' => $total]);
     
-        return response()->json([
-            'message' => 'Order created successfully!',
-            'order' => $order
-        ], 201);
+        return OrderResource::make($order);
     }
     
-
     public function getOrder($id)
     {
         $order = Order::with('items.product')->findOrFail($id);
 
-        return response()->json($order);
+        if ($order->user_id !== Auth::id()) {
+            return abort(401);
+        }
+
+        return OrderResource::make($order);
     }
 
     public function deleteOrder($id)
     {
+        // Find the order by ID
         $order = Order::findOrFail($id);
 
         if ($order->user_id !== Auth::id()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+            return abort(401);
         }
 
         $order->items()->delete();
