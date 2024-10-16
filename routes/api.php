@@ -76,6 +76,10 @@ Route::middleware('auth:api')->group(function () {
      */
     Route::delete('/orders/{id}', [OrderController::class, 'deleteOrder']);
 
+    /**
+     * Send a mail to zobie
+     */
+    Route::post('/send-email', [OrderController::class, 'sendEmail']);
 
     /**
      * Get Current User

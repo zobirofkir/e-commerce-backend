@@ -7,7 +7,9 @@ use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -20,7 +22,6 @@ class OrderController extends Controller
         return OrderResource::collection($orders);
     }
 
-    // Create a new order
     public function createOrder(OrderRequest $request)
     {
         $validatedData = $request->validated();
@@ -71,7 +72,6 @@ class OrderController extends Controller
 
     public function deleteOrder($id)
     {
-        // Find the order by ID
         $order = Order::findOrFail($id);
 
         if ($order->user_id !== Auth::id()) {
@@ -82,6 +82,38 @@ class OrderController extends Controller
 
         $order->delete();
 
-        return response()->json(['message' => 'Order deleted successfully'], 200);
+        return true;
+    }
+
+    public function sendEmail(Request $request)
+    {
+        $request->validate([
+            'orderId' => 'required|integer|exists:orders,id',
+        ]);
+    
+        $order = Order::with('items.product')->findOrFail($request->orderId); 
+    
+        $data = [
+            'order_id' => $order->id,
+            'name' => $order->name,
+            'email' => $order->email,
+            'phone' => $order->phone,
+            'shipping_address' => $order->shiping_address,
+            'total_price' => $order->total_price,
+            'items' => $order->items->map(function ($item) {
+                return [
+                    'product_name' => $item->product->title,
+                    'quantity' => $item->quantity,
+                    'price' => $item->price,
+                ];
+            }),
+        ];
+    
+        Mail::send('emails.order', $data, function ($message) use ($data) { 
+            $message->to('zobirofkir19@gmail.com')
+                    ->subject('New Order Received: #' . $data['order_id']);
+        });
+    
+        return true;
     }
 }
