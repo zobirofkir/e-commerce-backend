@@ -38,6 +38,8 @@ class ProductResource extends Resource
                 FileUpload::make('image')
                         ->disk('public') 
                         ->directory('products')
+                        ->multiple()
+                        ->maxFiles(10)
                         ->required(),
 
                 Textarea::make('description'),
@@ -70,11 +72,14 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('image')
-                ->label('Image')
-                ->label('Image')
-                ->disk('public') 
-                ->width(50) 
-                ->height(50),
+                    ->label('Image')
+                    ->getStateUsing(function ($record) {
+                        $images = json_decode($record->image, true);
+                        return $images ? asset('storage/' . $images[0]) : null;
+                    })
+                    ->disk('public')
+                    ->width(50)
+                    ->height(50),
                 
                 TextColumn::make('title'),
                 TextColumn::make('price'),

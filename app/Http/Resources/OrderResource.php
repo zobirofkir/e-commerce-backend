@@ -25,13 +25,7 @@ class OrderResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'items' => $this->items->map(function ($item) {
-                return [
-                    'product_name' => $item->product->title,
-                    'quantity' => $item->quantity,
-                    'price' => $item->price,
-                    'image' => $item->product->image,
-                    'description' => $item->product->description
-                ];
+                return new ProductResource($item->product);
             }),
         ];
     }
