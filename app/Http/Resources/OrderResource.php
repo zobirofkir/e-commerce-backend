@@ -20,10 +20,13 @@ class OrderResource extends JsonResource
             'order_status' => $this->order_status,
             'total_price' => $this->total_price,
             'payment_method' => $this->payment_method,
-            'shipping_address' => $this->shipping_address,
+            'shipping_address' => $this->shiping_address,
+            'phone' => $this->phone,
+            'name' => $this->name,
+            'email' => $this->email,
             'items' => $this->items->map(function ($item) {
                 return [
-                    'product_name' => $item->product->name,
+                    'product_name' => $item->product->title,
                     'quantity' => $item->quantity,
                     'price' => $item->price,
                     'image' => $item->product->image,

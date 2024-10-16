@@ -14,7 +14,10 @@ class Order extends Model
         'order_status',
         'total_price',
         'payment_method',
-        'shiping_address'
+        'shiping_address',
+        'name',
+        'email',
+        'phone',
     ];
 
 

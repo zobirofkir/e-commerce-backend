@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('email');
             $table->string('order_status');
             $table->decimal('total_price');
             $table->string('payment_method')->default('cash_on_delivery');
             $table->string('shiping_address');
+            $table->string('phone');
             $table->timestamps();
         });
     }

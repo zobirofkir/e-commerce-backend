@@ -29,8 +29,11 @@ class OrderController extends Controller
             'user_id' => Auth::id(),
             'order_status' => 'pending',
             'total_price' => 0, 
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
             'shiping_address' => $validatedData['shiping_address'],
-            'payment_method' => $validatedData['payment_method']
+            'payment_method' => $validatedData['payment_method'],
+            'phone' => $validatedData['phone']
         ]);
     
         $total = 0;

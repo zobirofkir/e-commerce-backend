@@ -23,10 +23,13 @@ class OrderRequest extends FormRequest
     {
         return [
             'products' => 'required|array',
+            'name' => 'required|string',
+            'email' => 'required|string',
             'products.*.id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
             'shiping_address' => 'required|string|max:255',
-            'payment_method' => 'required|string'
+            'payment_method' => 'required|string',
+            'phone' => 'required|string'
         ];
     }
 }
