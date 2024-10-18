@@ -31,9 +31,7 @@ class ProductsRelationManager extends RelationManager
 
             FileUpload::make('image')
                     ->disk('public') 
-                    ->directory('products')
-                    ->multiple()
-                    ->maxFiles(10)
+                    ->directory('blogs')
                     ->required(),
 
             Textarea::make('description'),
@@ -58,19 +56,16 @@ class ProductsRelationManager extends RelationManager
             ->recordTitleAttribute('title')
             ->columns([
                 ImageColumn::make('image')
-                    ->label('Image')
-                    ->getStateUsing(function ($record) {
-                        $images = json_decode($record->image, true);
-                        return $images ? asset('storage/' . $images[0]) : null;
-                    })
-                    ->disk('public')
-                    ->width(50)
-                    ->height(50),
-
+                ->label('Image')
+                ->label('Image')
+                ->disk('public') 
+                ->width(50) 
+                ->height(50),
+                
                 TextColumn::make('title'),
                 TextColumn::make('price'),
                 TextColumn::make('description')->limit(50),
-            ])->defaultSort('id', 'desc')
+            ])
             ->filters([
                 //
             ])
